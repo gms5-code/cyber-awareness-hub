@@ -705,7 +705,7 @@ function loadCyberNews(){
       const vulnerabilities = Array.isArray(data.vulnerabilities) ? data.vulnerabilities : [];
 
       if(!vulnerabilities.length){
-        container.innerHTML='<div class="news-status">Notizie non disponibili al momento, riprova più tardi.</div>';
+        container.innerHTML='<div class="news-status">Nessuna notizia trovata al momento</div>';
         return;
       }
 
