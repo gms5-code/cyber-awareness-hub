@@ -405,6 +405,15 @@ body{
 /* footer brand strip */
 .brand-footer{text-align:center;padding:32px 20px 12px;color:var(--text3);font-size:12px;border-top:1px solid var(--border);margin-top:48px;max-width:920px;margin-left:auto;margin-right:auto;}
 .brand-footer strong{color:var(--cap-blue-bright);font-weight:600;}
+
+/* Cyber News */
+#news-container{display:grid;gap:14px;}
+.news-card{background:linear-gradient(155deg,var(--bg2),rgba(13,22,38,.55));border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px;box-shadow:0 10px 24px rgba(5,10,20,.35);}
+.news-card:hover{border-color:var(--border2);transform:translateY(-1px);transition:transform .15s ease,border-color .15s ease;}
+.news-meta{font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
+.news-title{font-size:17px;font-weight:700;color:var(--text);margin:0 0 8px 0;}
+.news-desc{font-size:14px;color:var(--text2);line-height:1.6;margin:0;}
+.news-status{background:linear-gradient(155deg,rgba(148,163,184,.08),var(--bg2));border:1px dashed var(--border);border-radius:var(--radius-lg);padding:16px;color:var(--text2);font-size:14px;}
 </style>
 </head>
 <body>
@@ -447,8 +456,15 @@ body{
         <p>Record your voice and hear it transformed into a completely different identity using AI — in seconds.</p>
       </div>
     </div>
+    <div class="module-card" onclick="showPage('page-cybernews')">
+      <div class="mod-icon icon-teal"><i class="ti ti-news"></i></div>
+      <div class="module-card-body">
+        <h3><i class="ti ti-alert-triangle" style="margin-right:7px;opacity:.8;"></i>Cyber News</h3>
+        <p>Explore recent vulnerability headlines from the NVD feed and see how active threat intelligence looks in practice.</p>
+      </div>
+    </div>
     <div class="module-card" onclick="window.open('https://teams.microsoft.com/l/call/0/0?users=gabriele-mario.scarpa@capgemini.com','_blank')" style="cursor:pointer;">
-      <div class="mod-icon icon-teal"><i class="ti ti-video"></i></div>
+      <div class="mod-icon icon-amber"><i class="ti ti-video"></i></div>
       <div class="module-card-body">
         <h3><i class="ti ti-spy" style="margin-right:7px;opacity:.8;"></i>Live Video Cloning</h3>
         <p>Demonstrate real-time deepfake risk and its implications for enterprise security.</p>
@@ -564,6 +580,16 @@ body{
   <div id="level-content"></div>
 </div>
 
+<!-- CYBER NEWS MODULE -->
+<div class="page hidden" id="page-cybernews">
+  <div class="page-header">
+    <div class="page-title"><span class="title-icon icon-teal"><i class="ti ti-news"></i></span>Cyber News</div>
+    <button class="back-btn" onclick="showPage('page-home')"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg> Back to Home</button>
+  </div>
+  <div class="page-sub">Explore recent vulnerability intelligence from the NVD feed, focused on ransomware-related CVEs.</div>
+  <div id="news-container" class="news-grid"></div>
+</div>
+
 <!-- VOICE CLONING MODULE -->
 <div class="page hidden" id="page-voice">
   <div class="page-header">
@@ -660,7 +686,47 @@ function showPage(id){
   document.getElementById('home-btn').classList.toggle('visible',id!=='page-home');
   if(id==='page-pw')renderCharts();
   if(id==='page-agent')initAgent();
+  if(id==='page-cybernews')loadCyberNews();
   if(id==='page-voice')initVoicePage();
+}
+
+function loadCyberNews(){
+  const container=document.getElementById('news-container');
+  if(!container)return;
+
+  container.innerHTML='<div class="news-status">Caricamento notizie...</div>';
+
+  fetch('https://services.nvd.nist.gov/rest/json/cves/2.0?keywordSearch=ransomware&resultsPerPage=5')
+    .then(response=>{
+      if(!response.ok) throw new Error('HTTP ' + response.status);
+      return response.json();
+    })
+    .then(data=>{
+      const vulnerabilities = Array.isArray(data.vulnerabilities) ? data.vulnerabilities : [];
+
+      if(!vulnerabilities.length){
+        container.innerHTML='<div class="news-status">Notizie non disponibili al momento, riprova più tardi.</div>';
+        return;
+      }
+
+      container.innerHTML='';
+
+      vulnerabilities.forEach(item=>{
+        const cve=item.cve || {};
+        const description = (cve.descriptions || []).find(d=>d.lang==='en')?.value || 'Nessuna descrizione disponibile.';
+        const card=document.createElement('article');
+        card.className='news-card';
+        card.innerHTML=`
+          <div class="news-meta">${cve.id || 'CVE non disponibile'}</div>
+          <h3 class="news-title">${cve.id || 'CVE non disponibile'}</h3>
+          <p class="news-desc">${description}</p>
+        `;
+        container.appendChild(card);
+      });
+    })
+    .catch(()=>{
+      container.innerHTML='<div class="news-status">Notizie non disponibili al momento, riprova più tardi.</div>';
+    });
 }
 function toggleEye(iId,eId){
   const i=document.getElementById(iId),e=document.getElementById(eId);
