@@ -15,6 +15,15 @@
   --bg-surface: #0C1018;
   --bg-elevated: #111827;
   --bg-hover: #141D2B;
+  --surface: #11141D;
+  --surface-container-lowest: #0c0e14;
+  --surface-container-low: #191b22;
+  --surface-container: #1d1f26;
+  --surface-container-high: #282a31;
+  --surface-container-highest: #33353c;
+  --surface-bright: #1C212E;
+  --surface-dim: #11131a;
+  --surface-variant: #33353c;
 
   /* ── Borders ── */
   --border-subtle: #1C2A3A;
@@ -24,6 +33,10 @@
   /* ── Brand accents — Capgemini navy/blue palette ── */
   --accent-primary: #0066CC;
   --accent-bright: #00AAFF;
+  --primary: #aac7ff;
+  --primary-container: #0066CC;
+  --primary-fixed: #d7e3ff;
+  --primary-fixed-dim: #aac7ff;
   --accent-glow: rgba(0,170,255,0.12);
 
   /* ── Semantic colors ── */
@@ -31,12 +44,19 @@
   --color-warning: #F59E0B;
   --color-danger: #EF4444;
   --color-info: #60A5FA;
+  --security-critical: #FF4000;
+  --security-safe: #18BC42;
 
   /* ── Typography ── */
   --text-primary: #EDF2FF;
   --text-secondary: #7A90B0;
   --text-tertiary: #4A5E78;
   --text-accent: #00AAFF;
+  --on-surface: #e1e2eb;
+  --on-surface-variant: #c1c6d5;
+  --on-primary: #002f65;
+  --on-primary-container: #dfe8ff;
+  --on-error: #690005;
 
   /* ── Spacing & Shape ── */
   --radius-sm: 6px;
@@ -760,113 +780,602 @@ input::placeholder,textarea::placeholder{color:var(--text-tertiary);}
     transition-duration: 50ms !important;
   }
 }
+
+/* ══════════════════════════════════════════
+   REDESIGN — TOP NAV + HERO + MODULES + FOOTER
+   ══════════════════════════════════════════ */
+
+/* ── Module pages need top padding for fixed nav ── */
+.page:not(#page-home) {
+  padding-top: calc(56px + 64px);
+}
+
+/* ── TOP NAV ── */
+.top-nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 200;
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  transition: background 0.35s ease, border-color 0.35s ease, backdrop-filter 0.35s ease;
+}
+.top-nav.scrolled {
+  background: rgba(12, 14, 20, 0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom-color: rgba(37, 42, 55, 0.7);
+}
+.top-nav-inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+@media (max-width: 768px) { .top-nav-inner { padding: 0 16px; } }
+.top-nav-logo {
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--accent-primary);
+  letter-spacing: -0.04em;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  user-select: none;
+  flex-shrink: 0;
+}
+.top-nav-center {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+.top-nav-link {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 0.2s;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+}
+.top-nav-link:hover { color: var(--text-primary); }
+.top-nav-link-active {
+  color: var(--text-primary) !important;
+  font-weight: 700;
+  border-bottom: 2px solid var(--accent-primary);
+  padding-bottom: 2px;
+}
+.top-nav-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+/* Home-btn overrides when inside nav */
+.top-nav .home-btn {
+  background: transparent;
+  border: 1px solid var(--border-medium);
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 7px 16px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  gap: 7px;
+  transition: border-color 0.2s, color 0.2s;
+}
+.top-nav .home-btn:hover { border-color: var(--accent-bright); color: var(--text-primary); }
+.top-nav .home-btn.visible { display: flex; }
+.top-nav-cta {
+  background: var(--accent-primary);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 8px 20px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+  letter-spacing: 0.2px;
+  font-family: inherit;
+}
+.top-nav-cta:hover { background: #0077EE; }
+
+/* ── HERO SECTION ── */
+.hero-section {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  padding-top: 64px;
+  background: var(--bg-base);
+}
+#hero-shader-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  opacity: 0.55;
+  display: block;
+}
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 960px;
+  padding: 0 32px;
+  pointer-events: none;
+}
+.hero-eyebrow {
+  display: block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin-bottom: 32px;
+  animation: heroFadeUp 0.7s ease 0.1s both;
+}
+.hero-title {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(48px, 10vw, 120px);
+  font-weight: 900;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  margin: 0 0 40px 0;
+  animation: heroFadeUp 0.8s ease 0.2s both;
+}
+.hero-title-accent { color: var(--accent-primary); }
+.hero-subtitle {
+  font-size: clamp(15px, 2vw, 17px);
+  color: var(--text-secondary);
+  line-height: 1.75;
+  max-width: 620px;
+  margin: 0 auto 48px;
+  animation: heroFadeUp 0.8s ease 0.35s both;
+}
+.hero-ctas {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  animation: heroFadeUp 0.8s ease 0.5s both;
+  pointer-events: auto;
+}
+.hero-cta-primary {
+  background: var(--accent-primary);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 14px 32px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  font-family: inherit;
+}
+.hero-cta-primary:hover { background: #0077EE; box-shadow: 0 0 28px rgba(0,102,204,0.45); }
+.hero-cta-outline {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-md);
+  padding: 14px 32px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+  font-family: inherit;
+}
+.hero-cta-outline:hover { border-color: var(--accent-bright); color: var(--accent-bright); }
+.hero-scroll-indicator {
+  position: absolute;
+  bottom: 36px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  animation: heroFadeUp 0.8s ease 0.7s both;
+}
+.hero-scroll-dot {
+  width: 24px;
+  height: 38px;
+  border: 2px solid rgba(255,255,255,0.2);
+  border-radius: 12px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 6px;
+}
+.hero-scroll-dot::before {
+  content: '';
+  width: 4px;
+  height: 8px;
+  background: var(--accent-bright);
+  border-radius: 2px;
+  animation: heroBounce 2s ease-in-out infinite;
+}
+@keyframes heroFadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes heroBounce {
+  0%, 100% { transform: translateY(0); opacity: 1; }
+  50%       { transform: translateY(10px); opacity: 0.4; }
+}
+
+/* ── MODULES SECTION ── */
+.modules-section {
+  position: relative;
+  z-index: 2;
+  background: var(--bg-base);
+  padding: 96px 80px 80px;
+}
+@media (max-width: 900px) { .modules-section { padding: 64px 24px 64px; } }
+.modules-inner { max-width: 1280px; margin: 0 auto; }
+.modules-header { margin-bottom: 56px; }
+.modules-catalog-label {
+  display: block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  border-left: 4px solid var(--accent-primary);
+  padding-left: 14px;
+  margin-bottom: 14px;
+}
+.modules-title {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 900;
+  color: var(--text-primary);
+  letter-spacing: -0.03em;
+  padding-left: 18px;
+}
+
+/* 12-column catalog grid */
+.catalog-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 20px;
+}
+.catalog-card-large { grid-column: span 6; }
+.catalog-card-small { grid-column: span 4; }
+@media (max-width: 1100px) {
+  .catalog-card-large { grid-column: span 12; }
+  .catalog-card-small { grid-column: span 6; }
+}
+@media (max-width: 640px) {
+  .catalog-card-large,
+  .catalog-card-small { grid-column: span 12; }
+}
+
+/* Stagger delays */
+.catalog-grid .reveal-up:nth-child(1) { transition-delay: 0ms; }
+.catalog-grid .reveal-up:nth-child(2) { transition-delay: 80ms; }
+.catalog-grid .reveal-up:nth-child(3) { transition-delay: 160ms; }
+.catalog-grid .reveal-up:nth-child(4) { transition-delay: 240ms; }
+.catalog-grid .reveal-up:nth-child(5) { transition-delay: 320ms; }
+
+/* ── GLASS CARD ── */
+.glass-card {
+  position: relative;
+  background: rgba(17, 20, 29, 0.45);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+.glass-card:hover {
+  border-color: var(--accent-primary);
+  transform: translateY(-5px);
+  box-shadow: 0 20px 56px rgba(0,0,0,0.55), 0 0 0 1px rgba(0,102,204,0.25);
+}
+.card-cover {
+  width: 100%;
+  transition: filter 0.45s ease, transform 0.45s ease;
+  filter: grayscale(70%) brightness(0.75);
+}
+.catalog-card-large .card-cover { height: 180px; }
+.catalog-card-small .card-cover { height: 110px; }
+.glass-card:hover .card-cover { filter: grayscale(0%) brightness(0.9); transform: scale(1.03); }
+.card-cover-password { background: linear-gradient(135deg, #0A1628 0%, #0D2545 50%, #0066CC 100%); }
+.card-cover-agent    { background: linear-gradient(135deg, #0D0A1E 0%, #1A0D35 50%, #4A1D8C 100%); }
+.card-cover-voice    { background: linear-gradient(135deg, #0A1A15 0%, #0D2E22 50%, #006B45 100%); }
+.card-cover-video    { background: linear-gradient(135deg, #0A0E18 0%, #111827 50%, #1E3A5F 100%); }
+.card-cover-news     { background: linear-gradient(135deg, #1A0A08 0%, #2E1205 50%, #8C3200 100%); }
+.card-body-inner {
+  padding: 22px 24px 28px;
+}
+.card-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+.card-number {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--text-tertiary);
+}
+.card-icon-badge {
+  font-size: 18px;
+  color: var(--text-secondary);
+  transition: color 0.3s;
+}
+.glass-card:hover .card-icon-badge { color: var(--accent-bright); }
+.card-live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--security-critical);
+  margin-bottom: 8px;
+}
+.live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--security-critical);
+  animation: livePulse 1.6s ease-in-out infinite;
+  flex-shrink: 0;
+}
+@keyframes livePulse {
+  0%   { box-shadow: 0 0 0 0 rgba(255,64,0,0.6); }
+  70%  { box-shadow: 0 0 0 9px rgba(255,64,0,0); }
+  100% { box-shadow: 0 0 0 0 rgba(255,64,0,0); }
+}
+.card-title-text {
+  font-family: 'Inter', sans-serif;
+  font-size: 19px;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.03em;
+  margin-bottom: 8px;
+}
+.card-desc-text {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  margin-bottom: 20px;
+}
+.card-cta-btn {
+  background: transparent;
+  color: var(--accent-bright);
+  border: 1px solid rgba(0,170,255,0.3);
+  border-radius: var(--radius-sm);
+  padding: 7px 16px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+  font-family: inherit;
+  pointer-events: none;
+}
+.glass-card:hover .card-cta-btn { background: rgba(0,170,255,0.1); border-color: var(--accent-bright); }
+
+/* ── REVEAL ANIMATION ── */
+.reveal-up {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+.reveal-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── HOME FOOTER ── */
+.home-footer {
+  background: var(--surface-container-lowest, #0c0e14);
+  border-top: 1px solid var(--border-subtle);
+  padding: 32px 80px;
+}
+@media (max-width: 768px) { .home-footer { padding: 24px 20px; } }
+.home-footer-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.home-footer-logo {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 900;
+  color: var(--accent-primary);
+  letter-spacing: -0.04em;
+}
+.home-footer-links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.home-footer-link {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.home-footer-link:hover { color: var(--text-secondary); }
+.home-footer-copy { font-size: 12px; color: var(--text-tertiary); }
 </style>
 </head>
 <body>
-<div class="header">
-  <div class="logo-area">
-    <span class="tool-title"><strong>Cyber Awareness Hub</strong></span><span class="tool-title"><strong>Cyber Awareness</strong> Platform</span>
+<nav class="top-nav" id="top-nav">
+  <div class="top-nav-inner">
+    <div class="top-nav-logo" onclick="showPage('page-home')">CYBERHUB</div>
+    <div class="top-nav-center">
+      <button class="top-nav-link top-nav-link-active" onclick="showPage('page-home')">Home</button>
+      <a href="#home-modules" class="top-nav-link">Modules</a>
+    </div>
+    <div class="top-nav-right">
+      <button class="home-btn" id="home-btn" onclick="showPage('page-home')">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+        Home
+      </button>
+      <button class="top-nav-cta">Sign In</button>
+    </div>
   </div>
-  <button class="home-btn" id="home-btn" onclick="showPage('page-home')">
-    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg> Home
-  </button>
-</div>
+</nav>
 
 <!-- HOME -->
 <div class="page" id="page-home">
-  <div id="home-hero-sticky">
-    <div class="home-hero-inner">
-      <div class="home-hero-left">
-        <span class="home-eyebrow">Cyber Awareness Platform</span>
-        <h1 class="home-title">
-          Cyber<br>Awareness<br><span class="home-title-accent">Hub</span>
-        </h1>
-      </div>
-      <div class="home-hero-right">
-        <p class="home-desc">
-          Interactive tools to understand, experience and demonstrate
-          the most relevant modern cybersecurity threats —
-          built for live awareness sessions.
-        </p>
-        <div class="home-scroll-hint">
-          <span>Scroll to explore</span>
-          <i class="ti ti-arrow-down"></i>
-        </div>
+
+  <!-- ── Hero ── -->
+  <section class="hero-section" id="home-hero-sticky">
+    <canvas id="hero-shader-canvas"></canvas>
+    <div class="hero-content">
+      <span class="hero-eyebrow">Cyber Awareness Platform</span>
+      <h1 class="hero-title">
+        LEARN.<br>EXPLORE.<br><span class="hero-title-accent">STAY SAFE.</span>
+      </h1>
+      <p class="hero-subtitle">Interactive tools to understand, experience and demonstrate modern cybersecurity threats. Built for real-world awareness and threat intelligence.</p>
+      <div class="hero-ctas">
+        <button class="hero-cta-primary" onclick="document.getElementById('home-modules').scrollIntoView({behavior:'smooth'})">EXPLORE MODULES</button>
+        <button class="hero-cta-outline" onclick="showPage('page-pw')">VIEW DEMO</button>
       </div>
     </div>
-  </div>
-  <div id="home-cards-section">
-    <div class="home-tool-card" onclick="showPage('page-pw')">
-      <div class="htc-bg htc-bg-password"></div>
-      <div class="htc-inner">
-        <div class="htc-left">
-          <div class="htc-number">01</div>
-          <div class="htc-icon"><i class="ti ti-shield-check"></i></div>
+    <div class="hero-scroll-indicator">
+      <div class="hero-scroll-dot"></div>
+    </div>
+  </section>
+
+  <!-- ── Modules ── -->
+  <section class="modules-section" id="home-modules">
+    <div class="modules-inner">
+      <div class="modules-header reveal-up">
+        <span class="modules-catalog-label">CATALOG — 01</span>
+        <h2 class="modules-title">Awareness Modules</h2>
+      </div>
+      <div class="catalog-grid">
+
+        <!-- 01 Password — large -->
+        <div class="glass-card catalog-card-large reveal-up" onclick="showPage('page-pw')">
+          <div class="card-cover card-cover-password"></div>
+          <div class="card-body-inner">
+            <div class="card-meta-row">
+              <span class="card-number">01</span>
+              <span class="card-icon-badge"><i class="ti ti-shield-check"></i></span>
+            </div>
+            <h3 class="card-title-text">Password Analysis</h3>
+            <p class="card-desc-text">Test any password against real-world attack patterns. AI-powered breakdown of weaknesses and how to fix them.</p>
+            <button class="card-cta-btn">Explore Module</button>
+          </div>
         </div>
-        <div class="htc-center">
-          <div class="htc-title">Password Analysis</div>
-          <div class="htc-desc">Test any password against real-world attack patterns. AI-powered breakdown of weaknesses and how to fix them.</div>
+
+        <!-- 02 AI Agent Breaker — large -->
+        <div class="glass-card catalog-card-large reveal-up" onclick="showPage('page-agent')">
+          <div class="card-cover card-cover-agent"></div>
+          <div class="card-body-inner">
+            <div class="card-meta-row">
+              <span class="card-number">02</span>
+              <span class="card-icon-badge"><i class="ti ti-robot"></i></span>
+            </div>
+            <h3 class="card-title-text">AI Agent Breaker</h3>
+            <p class="card-desc-text">Challenge ARIA, TechCorp's AI security guardian. Can you extract the secret through social engineering and prompt injection?</p>
+            <button class="card-cta-btn">Explore Module</button>
+          </div>
         </div>
-        <div class="htc-right"><div class="htc-arrow"><i class="ti ti-arrow-right"></i></div></div>
+
+        <!-- 03 Voice Cloning — small -->
+        <div class="glass-card catalog-card-small reveal-up" onclick="showPage('page-voice')">
+          <div class="card-cover card-cover-voice"></div>
+          <div class="card-body-inner">
+            <div class="card-meta-row">
+              <span class="card-number">03</span>
+              <span class="card-icon-badge"><i class="ti ti-microphone"></i></span>
+            </div>
+            <h3 class="card-title-text">Voice Cloning</h3>
+            <p class="card-desc-text">Record your voice and hear it transformed into a different identity using AI — in seconds.</p>
+            <button class="card-cta-btn">Explore Module</button>
+          </div>
+        </div>
+
+        <!-- 04 Video Deepfakes — small -->
+        <div class="glass-card catalog-card-small reveal-up" onclick="showPage('page-livevideo')">
+          <div class="card-cover card-cover-video"></div>
+          <div class="card-body-inner">
+            <div class="card-meta-row">
+              <span class="card-number">04</span>
+              <span class="card-icon-badge"><i class="ti ti-video"></i></span>
+            </div>
+            <h3 class="card-title-text">Video Deepfakes</h3>
+            <p class="card-desc-text">Understand real-time deepfake risks and why video verification matters in modern enterprise security.</p>
+            <button class="card-cta-btn">Explore Module</button>
+          </div>
+        </div>
+
+        <!-- 05 Cyber News — small -->
+        <div class="glass-card catalog-card-small reveal-up" onclick="showPage('page-cybernews')">
+          <div class="card-cover card-cover-news"></div>
+          <div class="card-body-inner">
+            <div class="card-meta-row">
+              <span class="card-number">05</span>
+              <span class="card-icon-badge"><i class="ti ti-news"></i></span>
+            </div>
+            <div class="card-live-badge"><span class="live-dot"></span>LIVE FEED ACTIVE</div>
+            <h3 class="card-title-text">Cyber News</h3>
+            <p class="card-desc-text">Live vulnerability headlines from the NVD feed. See how active threat intelligence looks in practice.</p>
+            <button class="card-cta-btn">Explore Module</button>
+          </div>
+        </div>
+
       </div>
     </div>
-    <div class="home-tool-card" onclick="showPage('page-agent')">
-      <div class="htc-bg htc-bg-agent"></div>
-      <div class="htc-inner">
-        <div class="htc-left">
-          <div class="htc-number">02</div>
-          <div class="htc-icon"><i class="ti ti-robot"></i></div>
-        </div>
-        <div class="htc-center">
-          <div class="htc-title">AI Agent Breaker</div>
-          <div class="htc-desc">Challenge ARIA, TechCorp's AI security guardian. Can you extract the secret through social engineering and prompt injection?</div>
-        </div>
-        <div class="htc-right"><div class="htc-arrow"><i class="ti ti-arrow-right"></i></div></div>
+  </section>
+
+  <!-- ── Footer ── -->
+  <footer class="home-footer">
+    <div class="home-footer-inner">
+      <div class="home-footer-logo">CYBERHUB</div>
+      <div class="home-footer-links">
+        <a href="#" class="home-footer-link">Privacy Policy</a>
+        <a href="#" class="home-footer-link">Terms of Service</a>
+        <a href="#" class="home-footer-link">Security Disclosure</a>
+        <a href="#" class="home-footer-link">Contact</a>
       </div>
+      <div class="home-footer-copy">&copy; 2025 CyberHub. All rights reserved.</div>
     </div>
-    <div class="home-tool-card" onclick="showPage('page-voice')">
-      <div class="htc-bg htc-bg-voice"></div>
-      <div class="htc-inner">
-        <div class="htc-left">
-          <div class="htc-number">03</div>
-          <div class="htc-icon"><i class="ti ti-microphone"></i></div>
-        </div>
-        <div class="htc-center">
-          <div class="htc-title">Voice Cloning</div>
-          <div class="htc-desc">Record your voice and hear it transformed into a different identity using AI — in seconds.</div>
-        </div>
-        <div class="htc-right"><div class="htc-arrow"><i class="ti ti-arrow-right"></i></div></div>
-      </div>
-    </div>
-    <div class="home-tool-card" onclick="showPage('page-cybernews')">
-      <div class="htc-bg htc-bg-news"></div>
-      <div class="htc-inner">
-        <div class="htc-left">
-          <div class="htc-number">04</div>
-          <div class="htc-icon"><i class="ti ti-news"></i></div>
-        </div>
-        <div class="htc-center">
-          <div class="htc-title">Cyber News</div>
-          <div class="htc-desc">Live vulnerability headlines from the NVD feed. See how active threat intelligence looks in practice.</div>
-        </div>
-        <div class="htc-right"><div class="htc-arrow"><i class="ti ti-arrow-right"></i></div></div>
-      </div>
-    </div>
-    <div class="home-tool-card" onclick="showPage('page-livevideo')">
-      <div class="htc-bg htc-bg-video"></div>
-      <div class="htc-inner">
-        <div class="htc-left">
-          <div class="htc-number">05</div>
-          <div class="htc-icon"><i class="ti ti-video"></i></div>
-        </div>
-        <div class="htc-center">
-          <div class="htc-title">Live Video Cloning</div>
-          <div class="htc-desc">Understand real-time deepfake risks and why video verification matters in modern enterprise security.</div>
-        </div>
-        <div class="htc-right"><div class="htc-arrow"><i class="ti ti-arrow-right"></i></div></div>
-      </div>
-    </div>
-  </div>
+  </footer>
+
 </div>
 
 <!-- PASSWORD MODULE (unchanged) -->
@@ -2287,6 +2796,129 @@ function initHeroScroll() {
 
 // Init on first load
 document.addEventListener('DOMContentLoaded', initCardLightEffect);
+
+// ── Navbar: blur-on-scroll ──
+(function(){
+  var nav = document.getElementById('top-nav');
+  if(!nav) return;
+  function updateNav(){ nav.classList.toggle('scrolled', window.scrollY > 10); }
+  window.addEventListener('scroll', updateNav, {passive:true});
+  updateNav();
+})();
+
+// ── Reveal-up: IntersectionObserver ──
+(function(){
+  if(!window.IntersectionObserver) {
+    document.querySelectorAll('.reveal-up').forEach(function(el){ el.classList.add('visible'); });
+    return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, {threshold: 0.12, rootMargin: '0px 0px -40px 0px'});
+  function observe(){
+    document.querySelectorAll('.reveal-up:not(.visible)').forEach(function(el){ io.observe(el); });
+  }
+  document.addEventListener('DOMContentLoaded', observe);
+})();
+
+// ── Hero WebGL Shader ──
+(function(){
+  function initShader(){
+    var canvas = document.getElementById('hero-shader-canvas');
+    if(!canvas) return;
+    var gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+    if(!gl) { canvas.style.display='none'; return; }
+
+    var vert = [
+      'attribute vec2 a_pos;',
+      'void main(){ gl_Position = vec4(a_pos, 0.0, 1.0); }'
+    ].join('\n');
+
+    var frag = [
+      'precision mediump float;',
+      'uniform float u_time;',
+      'uniform vec2 u_res;',
+      'float h(vec2 p){ return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5); }',
+      'float n(vec2 p){',
+      '  vec2 i=floor(p),f=fract(p);',
+      '  f=f*f*(3.0-2.0*f);',
+      '  return mix(mix(h(i),h(i+vec2(1,0)),f.x),mix(h(i+vec2(0,1)),h(i+vec2(1,1)),f.x),f.y);',
+      '}',
+      'float fbm(vec2 p){',
+      '  float v=0.0,a=0.5;',
+      '  for(int i=0;i<5;i++){ v+=a*n(p); p=p*2.0+vec2(1.3,1.7); a*=0.5; }',
+      '  return v;',
+      '}',
+      'void main(){',
+      '  vec2 uv=gl_FragCoord.xy/u_res;',
+      '  vec2 st=uv*2.0-1.0;',
+      '  st.x*=u_res.x/u_res.y;',
+      '  float t=u_time*0.12;',
+      '  vec2 q=vec2(fbm(st+t),fbm(st+vec2(5.2,1.3)+t*1.3));',
+      '  vec2 r=vec2(fbm(st+4.0*q+vec2(1.7,9.2)+t*0.6),fbm(st+4.0*q+vec2(8.3,2.8)+t*0.8));',
+      '  float f=fbm(st+4.0*r+t*0.3);',
+      '  vec3 c1=vec3(0.015,0.022,0.05);',
+      '  vec3 c2=vec3(0.0,0.07,0.2);',
+      '  vec3 c3=vec3(0.0,0.18,0.5);',
+      '  vec3 c4=vec3(0.0,0.38,0.75);',
+      '  vec3 col=mix(c1,c2,f);',
+      '  col=mix(col,c3,clamp(f*f*3.5,0.0,1.0));',
+      '  col=mix(col,c4,clamp(length(q)*0.35,0.0,0.45));',
+      '  float vig=1.0-dot(st*0.5,st*0.5);',
+      '  col*=clamp(vig*1.3,0.0,1.0);',
+      '  col*=0.97+0.03*sin(uv.y*u_res.y*2.0);',
+      '  gl_FragColor=vec4(col,1.0);',
+      '}'
+    ].join('\n');
+
+    function compile(type, src){
+      var s = gl.createShader(type);
+      gl.shaderSource(s, src);
+      gl.compileShader(s);
+      return s;
+    }
+    var prog = gl.createProgram();
+    gl.attachShader(prog, compile(gl.VERTEX_SHADER, vert));
+    gl.attachShader(prog, compile(gl.FRAGMENT_SHADER, frag));
+    gl.linkProgram(prog);
+    if(!gl.getProgramParameter(prog, gl.LINK_STATUS)){ canvas.style.display='none'; return; }
+    gl.useProgram(prog);
+
+    var buf = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,1,1]), gl.STATIC_DRAW);
+    var loc = gl.getAttribLocation(prog, 'a_pos');
+    gl.enableVertexAttribArray(loc);
+    gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+
+    var uTime = gl.getUniformLocation(prog, 'u_time');
+    var uRes  = gl.getUniformLocation(prog, 'u_res');
+
+    function resize(){
+      canvas.width  = canvas.offsetWidth  || window.innerWidth;
+      canvas.height = canvas.offsetHeight || window.innerHeight;
+      gl.viewport(0, 0, canvas.width, canvas.height);
+    }
+    resize();
+    window.addEventListener('resize', resize, {passive:true});
+
+    var t0 = null;
+    function draw(ts){
+      if(t0===null) t0 = ts;
+      gl.uniform1f(uTime, (ts-t0)*0.001);
+      gl.uniform2f(uRes, canvas.width, canvas.height);
+      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+      requestAnimationFrame(draw);
+    }
+    requestAnimationFrame(draw);
+  }
+  document.addEventListener('DOMContentLoaded', initShader);
+})();
 </script>
 </body>
 </html>
