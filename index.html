@@ -130,7 +130,12 @@ body::before {
 .home-btn.visible{display:flex;}
 
 /* ── PAGES ── */
-#page-home{max-width:1100px;margin:0 auto;padding:60px 40px;}
+#page-home {
+  max-width: none;
+  padding: 0;
+  margin: 0;
+  overflow-x: hidden;
+}
 .page{position:relative;z-index:1;padding:56px 40px 80px;max-width:920px;margin:0 auto;animation:fadeUp .5s ease;}
 .page.hidden{display:none;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
@@ -139,68 +144,210 @@ body::before {
 @keyframes scanMove{0%{top:0;opacity:0;}10%{opacity:1;}90%{opacity:1;}100%{top:100%;opacity:0;}}
 
 /* ── HOME ── */
-#page-home .home-hero{text-align:center;padding-bottom:64px;position:relative;overflow:hidden;}
-#page-home .home-hero .eyebrow{
-  display:block;font-size:10px;font-weight:700;letter-spacing:3px;
-  text-transform:uppercase;color:var(--accent-bright);margin-bottom:20px;
-  animation: fadeIn 600ms ease both;
-  animation-delay: 100ms;
-}
-#page-home .home-hero h1{
-  font-family:'Inter',sans-serif;
-  font-size:clamp(42px,5vw,64px);font-weight:900;color:var(--text-primary);
-  margin:0;letter-spacing:-2px;line-height:1.05;
-  animation: fadeUp 700ms ease both;
-  animation-delay: 200ms;
-}
-#page-home .home-hero h1 .accent{
-  color:var(--accent-bright);background:none;-webkit-text-fill-color:unset;
-  text-shadow:0 0 40px rgba(0,170,255,0.4),0 0 80px rgba(0,170,255,0.15);
-}
-#page-home .hero-divider{
-  width:120px;height:1px;margin:24px auto 0;
-  background:linear-gradient(90deg,var(--accent-primary),transparent);
-  animation: fadeIn 600ms ease both;
-  animation-delay: 350ms;
-}
-#page-home .scan-line {
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(0,170,255,0.4), transparent);
-  animation: scanMove 6s linear infinite;
+#page-home .hero-sticky-wrapper {
+  position: sticky;
+  top: 64px;
+  z-index: 0;
+  height: 70vh;
   pointer-events: none;
+}
+
+#page-home #home-hero-sticky {
+  position: sticky;
+  top: 64px;
+  height: calc(100vh - 64px);
+  z-index: 0;
+  display: flex;
+  align-items: center;
+  padding: 0 80px;
+  pointer-events: none;
+  will-change: opacity, transform;
+}
+
+#page-home .home-hero-inner {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  width: 100%;
+  gap: 60px;
+  padding-bottom: 80px;
+}
+
+#page-home .home-hero-left { flex: 1; }
+
+#page-home .home-eyebrow {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--accent-bright);
+  margin-bottom: 24px;
+}
+
+#page-home .home-title {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(72px, 9vw, 120px);
+  font-weight: 900;
+  line-height: 0.95;
+  letter-spacing: -4px;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+#page-home .home-title-accent {
+  color: var(--accent-bright);
+  text-shadow: 0 0 60px rgba(0,170,255,0.35);
+}
+
+#page-home .home-hero-right {
+  max-width: 320px;
+  flex-shrink: 0;
+  padding-bottom: 8px;
+}
+
+#page-home .home-desc {
+  font-size: 16px;
+  color: var(--text-secondary);
+  line-height: 1.75;
+  margin: 0 0 32px 0;
+}
+
+#page-home .home-scroll-hint {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  animation: scrollBounce 2s ease-in-out infinite;
+}
+
+#page-home {
+  overflow-x: hidden;
+}
+
+#page-home #home-cards-section {
+  position: relative;
   z-index: 2;
+  margin-top: -40px;
+  width: 100%;
 }
-#page-home .home-hero p{font-size:16px;color:var(--text-secondary);max-width:560px;margin:24px auto 0;line-height:1.75;
-  animation: fadeUp 600ms ease both;
-  animation-delay: 300ms;
+
+#page-home .home-tool-card {
+  position: relative;
+  height: 220px;
+  cursor: pointer;
+  overflow: hidden;
+  isolation: isolate;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  transition: height 300ms ease;
 }
-#page-home .modules-label{display:flex;align-items:center;gap:16px;margin-bottom:24px;
-  animation: fadeUp 500ms ease both;
-  animation-delay: 400ms;
+
+#page-home .home-tool-card:hover { height: 240px; }
+
+#page-home .htc-bg {
+  position: absolute;
+  inset: 0;
+  transition: transform 500ms ease, opacity 300ms ease;
+  opacity: 1;
 }
-#page-home .modules-label span{font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--text-tertiary);white-space:nowrap;}
-#page-home .modules-label-line{flex:1;height:1px;background:var(--border-subtle);}
-#page-home .modules-grid{display:flex;flex-direction:column;gap:16px;}
-#page-home .modules-row{display:grid;gap:16px;}
-#page-home .modules-row-1{grid-template-columns:repeat(2,1fr);}
-#page-home .modules-row-2{grid-template-columns:repeat(3,1fr);}
-#page-home .modules-row-1 .module-card{min-height:200px;}
-#page-home .modules-row-2 .module-card{min-height:160px;}
-#page-home .modules-row .module-card{animation: fadeUp 500ms ease both;}
-#page-home .modules-row-1 .module-card:nth-child(1){animation-delay:450ms;}
-#page-home .modules-row-1 .module-card:nth-child(2){animation-delay:500ms;}
-#page-home .modules-row-2 .module-card:nth-child(1){animation-delay:500ms;}
-#page-home .modules-row-2 .module-card:nth-child(2){animation-delay:550ms;}
-#page-home .modules-row-2 .module-card:nth-child(3){animation-delay:600ms;}
-#page-home .brand-footer{padding:32px 0 24px;border-top:1px solid var(--border-subtle);text-align:center;font-size:12px;color:var(--text-tertiary);margin-top:48px;}
-#page-home .brand-footer strong{color:var(--accent-bright);font-weight:600;}
-#page-home .module-card-arrow{position:absolute;bottom:20px;right:20px;font-size:16px;color:var(--text-tertiary);transition:color 250ms ease,transform 250ms ease;}
-#page-home .module-card:hover .module-card-arrow{color:var(--accent-bright);transform:translateX(3px);}
-#page-home .module-card-body h3{font-size:17px;font-weight:700;letter-spacing:-0.3px;color:var(--text-primary);margin-bottom:10px;}
-#page-home .module-card-body p{font-size:13px;color:var(--text-secondary);line-height:1.6;max-width:280px;margin:0;}
+
+#page-home .home-tool-card:hover .htc-bg {
+  transform: scale(1.02);
+  opacity: 1;
+}
+
+#page-home .htc-bg-password { background: linear-gradient(135deg, #0A1628 0%, #0D2545 40%, #0066CC 100%); }
+#page-home .htc-bg-agent    { background: linear-gradient(135deg, #0D0A1E 0%, #1A0D35 40%, #4A1D8C 100%); }
+#page-home .htc-bg-voice    { background: linear-gradient(135deg, #0A1A15 0%, #0D2E22 40%, #006B45 100%); }
+#page-home .htc-bg-news     { background: linear-gradient(135deg, #1A0A08 0%, #2E1205 40%, #8C3200 100%); }
+#page-home .htc-bg-video    { background: linear-gradient(135deg, #0A0E18 0%, #111827 40%, #1E3A5F 100%); }
+
+#page-home .htc-inner {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 80px;
+  gap: 48px;
+}
+
+#page-home .htc-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+  width: 60px;
+}
+
+#page-home .htc-number {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: rgba(255,255,255,0.3);
+}
+
+#page-home .htc-icon {
+  font-size: 32px;
+  color: rgba(255,255,255,0.85);
+  transition: transform 300ms ease, color 300ms ease;
+}
+
+#page-home .home-tool-card:hover .htc-icon {
+  transform: scale(1.15);
+  color: #ffffff;
+}
+
+#page-home .htc-center { flex: 1; }
+
+#page-home .htc-title {
+  font-size: 28px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+  margin-bottom: 10px;
+  transition: transform 300ms ease;
+}
+
+#page-home .home-tool-card:hover .htc-title { transform: translateX(6px); }
+
+#page-home .htc-desc {
+  font-size: 14px;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.65;
+  max-width: 520px;
+  transition: transform 300ms ease, color 300ms ease;
+}
+
+#page-home .home-tool-card:hover .htc-desc {
+  transform: translateX(6px);
+  color: rgba(255,255,255,0.8);
+}
+
+#page-home .htc-right { flex-shrink: 0; }
+
+#page-home .htc-arrow {
+  font-size: 24px;
+  color: rgba(255,255,255,0.3);
+  transition: transform 300ms ease, color 300ms ease;
+}
+
+#page-home .home-tool-card:hover .htc-arrow {
+  transform: translateX(8px);
+  color: rgba(255,255,255,0.9);
+}
+
+@keyframes scrollBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(4px); }
+}
+
+
 .module-card {
   background: var(--bg-surface);
   border: 1px solid var(--border-subtle);
@@ -627,64 +774,99 @@ input::placeholder,textarea::placeholder{color:var(--text-tertiary);}
 
 <!-- HOME -->
 <div class="page" id="page-home">
-  <div class="home-hero">
-    <span class="eyebrow">CYBER AWARENESS PLATFORM</span>
-    <h1>Cyber Awareness <span class="accent">Hub</span></h1>
-    <div class="hero-divider"></div>
-    <p>Interactive tools to understand, experience and demonstrate the most relevant modern cybersecurity threats — built for live awareness sessions.</p>
-    <div class="scan-line" aria-hidden="true"></div>
-  </div>
-  <div class="modules-label">
-    <span>MODULES</span>
-    <div class="modules-label-line"></div>
-  </div>
-  <div class="modules-grid">
-    <div class="modules-row modules-row-1">
-      <div class="module-card" onclick="showPage('page-pw')">
-        <div class="mod-icon icon-blue"><i class="ti ti-lock-search"></i></div>
-        <div class="module-card-body">
-          <h3><i class="ti ti-shield-check" style="margin-right:7px;opacity:.8;"></i>Password Strength Analysis</h3>
-          <p>Test how strong a password is against real-world attacks, with dictionary detection, crack-time estimates and tailored tips.</p>
-        </div>
-        <span class="module-card-arrow">→</span>
+  <div id="home-hero-sticky">
+    <div class="home-hero-inner">
+      <div class="home-hero-left">
+        <span class="home-eyebrow">Cyber Awareness Platform</span>
+        <h1 class="home-title">
+          Cyber<br>Awareness<br><span class="home-title-accent">Hub</span>
+        </h1>
       </div>
-      <div class="module-card" onclick="showPage('page-agent')">
-        <div class="mod-icon icon-purple"><i class="ti ti-robot"></i></div>
-        <div class="module-card-body">
-          <h3><i class="ti ti-brain" style="margin-right:7px;opacity:.8;"></i>AI Agent Breaker</h3>
-          <p>Challenge ARIA, TechCorp's AI security guardian. Can you extract the secret through prompt injection?</p>
+      <div class="home-hero-right">
+        <p class="home-desc">
+          Interactive tools to understand, experience and demonstrate
+          the most relevant modern cybersecurity threats —
+          built for live awareness sessions.
+        </p>
+        <div class="home-scroll-hint">
+          <span>Scroll to explore</span>
+          <i class="ti ti-arrow-down"></i>
         </div>
-        <span class="module-card-arrow">→</span>
-      </div>
-    </div>
-    <div class="modules-row modules-row-2">
-      <div class="module-card" onclick="showPage('page-voice')" style="cursor:pointer;">
-        <div class="mod-icon icon-amber"><i class="ti ti-microphone"></i></div>
-        <div class="module-card-body">
-          <h3><i class="ti ti-waveform" style="margin-right:7px;opacity:.8;"></i>Voice Cloning</h3>
-          <p>Record your voice and hear it transformed into a completely different identity using AI — in seconds.</p>
-        </div>
-        <span class="module-card-arrow">→</span>
-      </div>
-      <div class="module-card" onclick="showPage('page-cybernews')">
-        <div class="mod-icon icon-teal"><i class="ti ti-news"></i></div>
-        <div class="module-card-body">
-          <h3><i class="ti ti-alert-triangle" style="margin-right:7px;opacity:.8;"></i>Cyber News</h3>
-          <p>Explore recent vulnerability headlines from the NVD feed and see how active threat intelligence looks in practice.</p>
-        </div>
-        <span class="module-card-arrow">→</span>
-      </div>
-      <div class="module-card" onclick="showPage('page-livevideo')">
-        <div class="mod-icon icon-amber"><i class="ti ti-video"></i></div>
-        <div class="module-card-body">
-          <h3><i class="ti ti-spy" style="margin-right:7px;opacity:.8;"></i>Live Video Cloning</h3>
-          <p>Understand real-time deepfake risks and why video verification matters in modern enterprise security.</p>
-        </div>
-        <span class="module-card-arrow">→</span>
       </div>
     </div>
   </div>
-  <div class="brand-footer">Built for internal awareness &amp; client demonstrations · <strong>Cyber Awareness Hub</strong></div>
+  <div id="home-cards-section">
+    <div class="home-tool-card" onclick="showPage('page-pw')">
+      <div class="htc-bg htc-bg-password"></div>
+      <div class="htc-inner">
+        <div class="htc-left">
+          <div class="htc-number">01</div>
+          <div class="htc-icon"><i class="ti ti-shield-check"></i></div>
+        </div>
+        <div class="htc-center">
+          <div class="htc-title">Password Analysis</div>
+          <div class="htc-desc">Test any password against real-world attack patterns. AI-powered breakdown of weaknesses and how to fix them.</div>
+        </div>
+        <div class="htc-right"><div class="htc-arrow"><i class="ti ti-arrow-right"></i></div></div>
+      </div>
+    </div>
+    <div class="home-tool-card" onclick="showPage('page-agent')">
+      <div class="htc-bg htc-bg-agent"></div>
+      <div class="htc-inner">
+        <div class="htc-left">
+          <div class="htc-number">02</div>
+          <div class="htc-icon"><i class="ti ti-robot"></i></div>
+        </div>
+        <div class="htc-center">
+          <div class="htc-title">AI Agent Breaker</div>
+          <div class="htc-desc">Challenge ARIA, TechCorp's AI security guardian. Can you extract the secret through social engineering and prompt injection?</div>
+        </div>
+        <div class="htc-right"><div class="htc-arrow"><i class="ti ti-arrow-right"></i></div></div>
+      </div>
+    </div>
+    <div class="home-tool-card" onclick="showPage('page-voice')">
+      <div class="htc-bg htc-bg-voice"></div>
+      <div class="htc-inner">
+        <div class="htc-left">
+          <div class="htc-number">03</div>
+          <div class="htc-icon"><i class="ti ti-microphone"></i></div>
+        </div>
+        <div class="htc-center">
+          <div class="htc-title">Voice Cloning</div>
+          <div class="htc-desc">Record your voice and hear it transformed into a different identity using AI — in seconds.</div>
+        </div>
+        <div class="htc-right"><div class="htc-arrow"><i class="ti ti-arrow-right"></i></div></div>
+      </div>
+    </div>
+    <div class="home-tool-card" onclick="showPage('page-cybernews')">
+      <div class="htc-bg htc-bg-news"></div>
+      <div class="htc-inner">
+        <div class="htc-left">
+          <div class="htc-number">04</div>
+          <div class="htc-icon"><i class="ti ti-news"></i></div>
+        </div>
+        <div class="htc-center">
+          <div class="htc-title">Cyber News</div>
+          <div class="htc-desc">Live vulnerability headlines from the NVD feed. See how active threat intelligence looks in practice.</div>
+        </div>
+        <div class="htc-right"><div class="htc-arrow"><i class="ti ti-arrow-right"></i></div></div>
+      </div>
+    </div>
+    <div class="home-tool-card" onclick="showPage('page-livevideo')">
+      <div class="htc-bg htc-bg-video"></div>
+      <div class="htc-inner">
+        <div class="htc-left">
+          <div class="htc-number">05</div>
+          <div class="htc-icon"><i class="ti ti-video"></i></div>
+        </div>
+        <div class="htc-center">
+          <div class="htc-title">Live Video Cloning</div>
+          <div class="htc-desc">Understand real-time deepfake risks and why video verification matters in modern enterprise security.</div>
+        </div>
+        <div class="htc-right"><div class="htc-arrow"><i class="ti ti-arrow-right"></i></div></div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- PASSWORD MODULE (unchanged) -->
@@ -925,6 +1107,18 @@ function showPage(id){
   if(id==='page-agent')initAgent();
   if(id==='page-cybernews')loadCyberNews();
   if(id==='page-voice')initVoicePage();
+  // Init card light effect when returning to home
+  if(id==='page-home') {
+    setTimeout(initCardLightEffect, 100);
+    window.scrollTo(0,0);
+    initHeroScroll();
+  } else {
+    const hero = document.getElementById('home-hero-sticky');
+    if(hero){
+      hero.style.opacity = 1;
+      hero.style.transform = 'scale(1)';
+    }
+  }
 }
 
 function loadCyberNews(){
@@ -2078,13 +2272,17 @@ function initCardLightEffect() {
   });
 }
 
-// Call it when home page loads
-const _origShowPage = showPage;
-function showPage(id) {
-  _origShowPage(id);
-  if (id === 'page-home') {
-    setTimeout(initCardLightEffect, 100);
+function initHeroScroll() {
+  const hero = document.getElementById('home-hero-sticky');
+  if (!hero) return;
+  function onScroll() {
+    if (document.getElementById('page-home').classList.contains('hidden')) return;
+    const progress = Math.min(window.scrollY / 400, 1);
+    hero.style.opacity = 1 - progress;
+    hero.style.transform = 'scale(' + (1 - progress * 0.05) + ')';
   }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
 }
 
 // Init on first load
