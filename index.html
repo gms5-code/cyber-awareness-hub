@@ -249,24 +249,27 @@ body::before {
   overflow-x: hidden;
 }
 
-#page-home #home-cards-section {
+#home-cards-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
   position: relative;
   z-index: 2;
   margin-top: -40px;
   width: 100%;
 }
 
-#page-home .home-tool-card {
+.home-tool-card {
   position: relative;
-  height: 220px;
+  height: 280px;
   cursor: pointer;
   overflow: hidden;
-  isolation: isolate;
-  border-top: 1px solid rgba(255,255,255,0.06);
+  border-top: none;
+  border-radius: 16px;
   transition: height 300ms ease;
 }
 
-#page-home .home-tool-card:hover { height: 240px; }
+.home-tool-card:hover { height: 300px; }
 
 #page-home .htc-bg {
   position: absolute;
@@ -283,7 +286,6 @@ body::before {
 #page-home .htc-bg-password { background: linear-gradient(135deg, #0A1628 0%, #0D2545 40%, #0066CC 100%); }
 #page-home .htc-bg-agent    { background: linear-gradient(135deg, #0D0A1E 0%, #1A0D35 40%, #4A1D8C 100%); }
 #page-home .htc-bg-voice    { background: linear-gradient(135deg, #0A1A15 0%, #0D2E22 40%, #006B45 100%); }
-#page-home .htc-bg-news     { background: linear-gradient(135deg, #1A0A08 0%, #2E1205 40%, #8C3200 100%); }
 #page-home .htc-bg-video    { background: linear-gradient(135deg, #0A0E18 0%, #111827 40%, #1E3A5F 100%); }
 
 #page-home .htc-inner {
@@ -511,15 +513,13 @@ input::placeholder,textarea::placeholder{color:var(--text-tertiary);}
 .eye-btn{position:absolute;right:16px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--text3);cursor:pointer;font-size:20px;transition:color .15s;}
 .eye-btn:hover{color:var(--cap-blue-bright);}
 
-.ai-analysis-wrap{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px;}
-.ai-analysis-btn{background:var(--violet);color:#fff;border:1px solid rgba(167,139,250,.3);border-radius:var(--radius);padding:14px 18px;font-size:14px;font-weight:700;letter-spacing:.02em;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:10px;box-shadow:0 4px 14px rgba(167,139,250,.18);}
-.ai-analysis-btn:hover:not(:disabled){background:linear-gradient(135deg,var(--violet),#8c6ef2);}
-.ai-analysis-btn:disabled{opacity:.45;cursor:not-allowed;}
 .ai-analysis-box{display:none;background:linear-gradient(155deg,rgba(167,139,250,.08),rgba(25,0,56,.20));border:1px solid rgba(167,139,250,.22);border-radius:var(--radius);padding:18px 20px;margin-top:16px;color:var(--text2);}
 .ai-analysis-box-title{font-size:12px;font-weight:700;color:var(--violet);text-transform:uppercase;letter-spacing:.12em;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
 .ai-analysis-box-content{font-size:14px;line-height:1.75;}
 .ai-analysis-error{color:var(--red);}
 .ai-analysis-loading{color:var(--text2);}
+.ai-phase-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--accent-bright);margin-right:8px;animation:pulseDot 1.2s ease-in-out infinite;vertical-align:middle;}
+@keyframes pulseDot{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(.7);}}
 
 /* ── STRENGTH ── */
 .strength-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
@@ -550,6 +550,8 @@ input::placeholder,textarea::placeholder{color:var(--text-tertiary);}
 .match-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:24px;}
 .match-label{font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.8px;}
 .match-pill{font-size:11.5px;font-weight:600;padding:4px 12px;border-radius:30px;background:rgba(255,179,64,.12);color:var(--amber);box-shadow:inset 0 0 0 1px rgba(255,179,64,.25);}
+.match-pill-wrap{display:inline-flex;align-items:center;gap:8px;margin-right:8px;margin-bottom:6px;}
+.match-pill-desc{font-size:12px;color:var(--text-tertiary);font-style:italic;}
 .dict-note{font-size:12px;color:var(--text3);line-height:1.65;margin-top:20px;padding-top:18px;border-top:1px solid var(--border);display:flex;align-items:flex-start;}
 .dict-note i{color:var(--cap-blue-bright);margin-top:2px;flex-shrink:0;}
 
@@ -579,10 +581,6 @@ input::placeholder,textarea::placeholder{color:var(--text-tertiary);}
 .section-box{background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);padding:24px;margin-bottom:24px;box-shadow:var(--shadow-card);transition:border-color var(--transition-base);}
 .section-box:hover{border-color:var(--border-medium);}
 .section-box-title{font-size:11px;font-weight:700;color:var(--text-secondary);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:12px;display:flex;align-items:center;}
-.tip-item{display:flex;align-items:flex-start;gap:12px;padding:11px 0;border-bottom:1px solid var(--border);}
-.tip-item:last-child{border-bottom:none;}
-.tip-dot{width:8px;height:8px;border-radius:50%;margin-top:7px;flex-shrink:0;}
-.tip-text{font-size:14px;color:var(--text2);line-height:1.6;}
 
 /* ── HASH / CRACK ── */
 .algo-select{background:var(--bg2);border:1px solid var(--border);color:var(--text2);font-size:13.5px;padding:13px 16px;border-radius:var(--radius);width:100%;margin-bottom:20px;outline:none;cursor:pointer;transition:border-color .2s;}
@@ -766,14 +764,6 @@ input::placeholder,textarea::placeholder{color:var(--text-tertiary);}
 .brand-footer{text-align:center;padding:32px 20px 12px;color:var(--text3);font-size:12px;border-top:1px solid var(--border);margin-top:48px;max-width:920px;margin-left:auto;margin-right:auto;}
 .brand-footer strong{color:var(--cap-blue-bright);font-weight:600;}
 
-/* Cyber News */
-#news-container{display:grid;gap:14px;}
-.news-card{background:linear-gradient(155deg,var(--bg2),rgba(13,22,38,.55));border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px;box-shadow:0 10px 24px rgba(5,10,20,.35);}
-.news-card:hover{border-color:var(--border2);transform:translateY(-1px);transition:transform .15s ease,border-color .15s ease;}
-.news-meta{font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
-.news-title{font-size:17px;font-weight:700;color:var(--text);margin:0 0 8px 0;}
-.news-desc{font-size:14px;color:var(--text2);line-height:1.6;margin:0;}
-.news-status{background:linear-gradient(155deg,rgba(148,163,184,.08),var(--bg2));border:1px dashed var(--border);border-radius:var(--radius-lg);padding:16px;color:var(--text2);font-size:14px;}
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation: none !important;
@@ -1110,7 +1100,6 @@ input::placeholder,textarea::placeholder{color:var(--text-tertiary);}
 .card-cover-agent    { background: linear-gradient(135deg, #0D0A1E 0%, #1A0D35 50%, #4A1D8C 100%); }
 .card-cover-voice    { background: linear-gradient(135deg, #0A1A15 0%, #0D2E22 50%, #006B45 100%); }
 .card-cover-video    { background: linear-gradient(135deg, #0A0E18 0%, #111827 50%, #1E3A5F 100%); }
-.card-cover-news     { background: linear-gradient(135deg, #1A0A08 0%, #2E1205 50%, #8C3200 100%); }
 .card-body-inner {
   padding: 22px 24px 28px;
 }
@@ -1133,31 +1122,6 @@ input::placeholder,textarea::placeholder{color:var(--text-tertiary);}
   transition: color 0.3s;
 }
 .glass-card:hover .card-icon-badge { color: var(--accent-bright); }
-.card-live-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 9.5px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--security-critical);
-  margin-bottom: 8px;
-}
-.live-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--security-critical);
-  animation: livePulse 1.6s ease-in-out infinite;
-  flex-shrink: 0;
-}
-@keyframes livePulse {
-  0%   { box-shadow: 0 0 0 0 rgba(255,64,0,0.6); }
-  70%  { box-shadow: 0 0 0 9px rgba(255,64,0,0); }
-  100% { box-shadow: 0 0 0 0 rgba(255,64,0,0); }
-}
 .card-title-text {
   font-family: 'Inter', sans-serif;
   font-size: 19px;
@@ -1278,89 +1242,77 @@ input::placeholder,textarea::placeholder{color:var(--text-tertiary);}
     </div>
   </section>
 
-  <!-- ── Modules ── -->
-  <section class="modules-section" id="home-modules">
-    <div class="modules-inner">
-      <div class="modules-header reveal-up">
-        <span class="modules-catalog-label">CATALOG — 01</span>
-        <h2 class="modules-title">Awareness Modules</h2>
-      </div>
-      <div class="catalog-grid">
+  <div id="home-cards-section">
 
-        <!-- 01 Password — large -->
-        <div class="glass-card catalog-card-large reveal-up" onclick="showPage('page-pw')">
-          <div class="card-cover card-cover-password"></div>
-          <div class="card-body-inner">
-            <div class="card-meta-row">
-              <span class="card-number">01</span>
-              <span class="card-icon-badge"><i class="ti ti-shield-check"></i></span>
-            </div>
-            <h3 class="card-title-text">Password Analysis</h3>
-            <p class="card-desc-text">Test any password against real-world attack patterns. AI-powered breakdown of weaknesses and how to fix them.</p>
-            <button class="card-cta-btn">Explore Module</button>
-          </div>
+    <div class="home-tool-card" onclick="showPage('page-pw')">
+      <div class="htc-bg htc-bg-password"></div>
+      <div class="htc-inner">
+        <div class="htc-left">
+          <span class="htc-number">01</span>
+          <i class="htc-icon ti ti-shield-check"></i>
         </div>
-
-        <!-- 02 AI Agent Breaker — large -->
-        <div class="glass-card catalog-card-large reveal-up" onclick="showPage('page-agent')">
-          <div class="card-cover card-cover-agent"></div>
-          <div class="card-body-inner">
-            <div class="card-meta-row">
-              <span class="card-number">02</span>
-              <span class="card-icon-badge"><i class="ti ti-robot"></i></span>
-            </div>
-            <h3 class="card-title-text">AI Agent Breaker</h3>
-            <p class="card-desc-text">Challenge ARIA, TechCorp's AI security guardian. Can you extract the secret through social engineering and prompt injection?</p>
-            <button class="card-cta-btn">Explore Module</button>
-          </div>
+        <div class="htc-center">
+          <div class="htc-title">Password Analysis</div>
+          <div class="htc-desc">Test any password against real-world attack patterns. AI-powered breakdown of weaknesses and how to fix them.</div>
         </div>
-
-        <!-- 03 Voice Cloning — small -->
-        <div class="glass-card catalog-card-small reveal-up" onclick="showPage('page-voice')">
-          <div class="card-cover card-cover-voice"></div>
-          <div class="card-body-inner">
-            <div class="card-meta-row">
-              <span class="card-number">03</span>
-              <span class="card-icon-badge"><i class="ti ti-microphone"></i></span>
-            </div>
-            <h3 class="card-title-text">Voice Cloning</h3>
-            <p class="card-desc-text">Record your voice and hear it transformed into a different identity using AI — in seconds.</p>
-            <button class="card-cta-btn">Explore Module</button>
-          </div>
+        <div class="htc-right">
+          <i class="htc-arrow ti ti-arrow-right"></i>
         </div>
-
-        <!-- 04 Video Deepfakes — small -->
-        <div class="glass-card catalog-card-small reveal-up" onclick="showPage('page-livevideo')">
-          <div class="card-cover card-cover-video"></div>
-          <div class="card-body-inner">
-            <div class="card-meta-row">
-              <span class="card-number">04</span>
-              <span class="card-icon-badge"><i class="ti ti-video"></i></span>
-            </div>
-            <h3 class="card-title-text">Video Deepfakes</h3>
-            <p class="card-desc-text">Understand real-time deepfake risks and why video verification matters in modern enterprise security.</p>
-            <button class="card-cta-btn">Explore Module</button>
-          </div>
-        </div>
-
-        <!-- 05 Cyber News — small -->
-        <div class="glass-card catalog-card-small reveal-up" onclick="showPage('page-cybernews')">
-          <div class="card-cover card-cover-news"></div>
-          <div class="card-body-inner">
-            <div class="card-meta-row">
-              <span class="card-number">05</span>
-              <span class="card-icon-badge"><i class="ti ti-news"></i></span>
-            </div>
-            <div class="card-live-badge"><span class="live-dot"></span>LIVE FEED ACTIVE</div>
-            <h3 class="card-title-text">Cyber News</h3>
-            <p class="card-desc-text">Live vulnerability headlines from the NVD feed. See how active threat intelligence looks in practice.</p>
-            <button class="card-cta-btn">Explore Module</button>
-          </div>
-        </div>
-
       </div>
     </div>
-  </section>
+
+    <div class="home-tool-card" onclick="showPage('page-agent')">
+      <div class="htc-bg htc-bg-agent"></div>
+      <div class="htc-inner">
+        <div class="htc-left">
+          <span class="htc-number">02</span>
+          <i class="htc-icon ti ti-robot"></i>
+        </div>
+        <div class="htc-center">
+          <div class="htc-title">AI Agent Breaker</div>
+          <div class="htc-desc">Challenge ARIA, TechCorp's AI security guardian. Can you extract the secret through social engineering and prompt injection?</div>
+        </div>
+        <div class="htc-right">
+          <i class="htc-arrow ti ti-arrow-right"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="home-tool-card" onclick="showPage('page-voice')">
+      <div class="htc-bg htc-bg-voice"></div>
+      <div class="htc-inner">
+        <div class="htc-left">
+          <span class="htc-number">03</span>
+          <i class="htc-icon ti ti-microphone"></i>
+        </div>
+        <div class="htc-center">
+          <div class="htc-title">Voice Cloning</div>
+          <div class="htc-desc">Record your voice and hear it transformed into a different identity using AI — in seconds.</div>
+        </div>
+        <div class="htc-right">
+          <i class="htc-arrow ti ti-arrow-right"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="home-tool-card" onclick="showPage('page-livevideo')">
+      <div class="htc-bg htc-bg-video"></div>
+      <div class="htc-inner">
+        <div class="htc-left">
+          <span class="htc-number">04</span>
+          <i class="htc-icon ti ti-video"></i>
+        </div>
+        <div class="htc-center">
+          <div class="htc-title">Live Video Cloning</div>
+          <div class="htc-desc">Understand real-time deepfake risks and why video verification matters in modern enterprise security.</div>
+        </div>
+        <div class="htc-right">
+          <i class="htc-arrow ti ti-arrow-right"></i>
+        </div>
+      </div>
+    </div>
+
+  </div>
 
   <!-- ── Footer ── -->
   <footer class="home-footer">
@@ -1391,7 +1343,7 @@ input::placeholder,textarea::placeholder{color:var(--text-tertiary);}
   </div>
   <div id="panel-s">
     <div class="input-wrap">
-      <input class="pw-input" type="password" id="pw-s" placeholder="Enter password to analyse..." oninput="analyzePw(this.value); updateAiAnalysisButton(this.value)" autocomplete="off"/>
+      <input class="pw-input" type="password" id="pw-s" placeholder="Enter password to analyse..." oninput="analyzePw(this.value); scheduleAiAnalysis(this.value)" autocomplete="off"/>
       <button class="eye-btn" onclick="toggleEye('pw-s','eye-s')"><i class="ti ti-eye" id="eye-s"></i></button>
     </div>
     <div class="strength-row"><span class="strength-lbl">Strength</span><span class="strength-text" id="strength-text" style="color:var(--text3);">—</span></div>
@@ -1431,16 +1383,15 @@ input::placeholder,textarea::placeholder{color:var(--text-tertiary);}
       <span id="match-pills"></span>
     </div>
 
-    <div class="section-box">
-      <div class="section-box-title"><i class="ti ti-bulb" style="margin-right:7px;color:var(--amber);"></i>Tips to strengthen it</div>
-      <div id="tips-list"><div style="font-size:14px;color:var(--text3);">Enter a password above to get tailored recommendations.</div></div>
-    </div>
-    <div class="ai-analysis-wrap">
-      <button class="ai-analysis-btn" id="ai-analysis-btn" onclick="getAiAnalysis()" disabled><i class="ti ti-brain"></i> Get AI Analysis</button>
-    </div>
     <div class="ai-analysis-box" id="ai-analysis-box">
-      <div class="ai-analysis-box-title"><i class="ti ti-stars"></i> AI-Powered Insight</div>
-      <div class="ai-analysis-box-content ai-analysis-loading" id="ai-analysis-loading">Analyzing with AI...</div>
+      <div class="ai-analysis-box-title">
+        <i class="ti ti-sparkles"></i>
+        AI Analysis
+      </div>
+      <div class="ai-analysis-box-content ai-analysis-loading" id="ai-analysis-loading">
+        <span class="ai-phase-dot"></span>
+        <span id="ai-phase-text">Analyzing patterns...</span>
+      </div>
       <div class="ai-analysis-box-content" id="ai-analysis-result"></div>
       <div class="ai-analysis-box-content ai-analysis-error" id="ai-analysis-error">AI analysis unavailable right now, please try again later.</div>
     </div>
@@ -1494,15 +1445,6 @@ input::placeholder,textarea::placeholder{color:var(--text-tertiary);}
 </div>
 
 <!-- CYBER NEWS MODULE -->
-<div class="page hidden" id="page-cybernews">
-  <div class="page-header">
-    <div class="page-title"><span class="title-icon icon-teal"><i class="ti ti-news"></i></span>Cyber News</div>
-    <button class="back-btn" onclick="showPage('page-home')"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg> Back to Home</button>
-  </div>
-  <div class="page-sub">Explore recent vulnerability intelligence from the NVD feed, focused on ransomware-related CVEs.</div>
-  <div id="news-container" class="news-grid"></div>
-</div>
-
 <!-- LIVE VIDEO CLONING MODULE -->
 <div class="page hidden" id="page-livevideo">
   <div class="page-header">
@@ -1614,7 +1556,6 @@ function showPage(id){
   document.getElementById('home-btn').classList.toggle('visible',id!=='page-home');
   if(id==='page-pw')renderCharts();
   if(id==='page-agent')initAgent();
-  if(id==='page-cybernews')loadCyberNews();
   if(id==='page-voice')initVoicePage();
   // Init card light effect when returning to home
   if(id==='page-home') {
@@ -1630,44 +1571,6 @@ function showPage(id){
   }
 }
 
-function loadCyberNews(){
-  const container=document.getElementById('news-container');
-  if(!container)return;
-
-  container.innerHTML='<div class="news-status">Caricamento notizie...</div>';
-
-  fetch('https://services.nvd.nist.gov/rest/json/cves/2.0?keywordSearch=ransomware&resultsPerPage=5')
-    .then(response=>{
-      if(!response.ok) throw new Error('HTTP ' + response.status);
-      return response.json();
-    })
-    .then(data=>{
-      const vulnerabilities = Array.isArray(data.vulnerabilities) ? data.vulnerabilities : [];
-
-      if(!vulnerabilities.length){
-        container.innerHTML='<div class="news-status">Nessuna notizia trovata al momento</div>';
-        return;
-      }
-
-      container.innerHTML='';
-
-      vulnerabilities.forEach(item=>{
-        const cve=item.cve || {};
-        const description = (cve.descriptions || []).find(d=>d.lang==='en')?.value || 'Nessuna descrizione disponibile.';
-        const card=document.createElement('article');
-        card.className='news-card';
-        card.innerHTML=`
-          <div class="news-meta">${cve.id || 'CVE non disponibile'}</div>
-          <h3 class="news-title">${cve.id || 'CVE non disponibile'}</h3>
-          <p class="news-desc">${description}</p>
-        `;
-        container.appendChild(card);
-      });
-    })
-    .catch(()=>{
-      container.innerHTML='<div class="news-status">Notizie non disponibili al momento, riprova più tardi.</div>';
-    });
-}
 function toggleEye(iId,eId){
   const i=document.getElementById(iId),e=document.getElementById(eId);
   i.type=i.type==='password'?'text':'password';
@@ -1704,6 +1607,14 @@ const PATTERN_NAMES={
   regex:'Predictable pattern',
   date:'Date',
   bruteforce:'Random segment'
+};
+const PILL_DESCS={
+  'dictionary':'This word appears in attacker wordlists and can be cracked instantly.',
+  'leaked password':'This exact password was found in real data breaches.',
+  'sequence':'Sequential patterns like \'123\' or \'abc\' are the first thing attackers try.',
+  'repeat':'Repeated characters add no security — attackers test these automatically.',
+  'date':'Dates are predictable and easy to guess, especially birthdays.',
+  'spatial':'Keyboard patterns like \'qwerty\' are well-known to attackers.'
 };
 function analyzePw(pw){
   if(!pw){resetStr();return;}
@@ -1803,41 +1714,25 @@ function analyzePw(pw){
   const seen=new Set();
   (r.sequence||[]).forEach(s=>{
     let name=PATTERN_NAMES[s.pattern]||s.pattern;
+    let descKey=s.pattern;
     if(s.pattern==='dictionary'){
-      if(s.dictionary_name==='passwords')name='Leaked password';
+      if(s.dictionary_name==='passwords'){name='Leaked password';descKey='leaked password';}
       else if(s.dictionary_name==='english_wikipedia')name='English word';
       else if(s.dictionary_name&&s.dictionary_name.indexOf('names')>=0)name='Common name';
       else name='Dictionary word';
     }
-    if(s.pattern!=='bruteforce'&&!seen.has(name)){seen.add(name);pills.push(name);}
+    if(s.pattern!=='bruteforce'&&!seen.has(name)){seen.add(name);pills.push({name,descKey});}
   });
   if(pills.length){
-    document.getElementById('match-pills').innerHTML=pills.map(n=>`<span class="match-pill">${n}</span>`).join(' ');
+    document.getElementById('match-pills').innerHTML=pills.map(({name,descKey})=>{
+      const desc=PILL_DESCS[descKey]||'This pattern makes the password easier to predict.';
+      return `<span class="match-pill-wrap"><span class="match-pill">${name}</span><span class="match-pill-desc">${desc}</span></span>`;
+    }).join('');
     matchRow.style.display='flex';
   } else {
     matchRow.style.display='none';
   }
 
-  // Tips
-  const tips=[];
-  const cGood='#34d399',cWarn='#ffa050',cInfo='#12abdb';
-  if(isLeaked){
-    tips.push({t:'This exact password appears in leaked-password lists. Never use it — repeating or lengthening a leaked password does not make it safe.',c:'#ff6b6b'});
-  }
-  const sugg=(r.feedback&&r.feedback.suggestions)||[];
-  sugg.forEach(s=>tips.push({t:s,c:cWarn}));
-  // add our own context-aware tips
-  if(pw.length<12)tips.push({t:'Aim for at least 12–16 characters. Length matters more than complexity.',c:cWarn});
-  if(seen.has('English word')||seen.has('Dictionary word'))tips.push({t:'Avoid real words. A passphrase of unrelated words (e.g. "river-cactus-velvet-9") is both strong and memorable.',c:cInfo});
-  if(!hasSpecial)tips.push({t:'Add special characters (!, @, #, $…) to widen the search space.',c:cInfo});
-  if(!hasDigit)tips.push({t:'Include at least one digit.',c:cInfo});
-  if(!hasUpper||!hasLower)tips.push({t:'Mix uppercase and lowercase letters.',c:cInfo});
-  if(!isLeaked&&effScore>=4&&tips.length===0)tips.push({t:'Excellent password. Store it in a password manager and never reuse it.',c:cGood});
-  if(!isLeaked&&effScore>=3&&tips.length===0)tips.push({t:'Solid password. Avoid reusing it across multiple services.',c:cGood});
-  // de-duplicate
-  const uniq=[];const ts=new Set();
-  tips.forEach(t=>{if(!ts.has(t.t)){ts.add(t.t);uniq.push(t);}});
-  document.getElementById('tips-list').innerHTML=uniq.map(t=>`<div class="tip-item"><div class="tip-dot" style="background:${t.c}"></div><div class="tip-text">${t.t}</div></div>`).join('');
 }
 function resetStr(){
   document.getElementById('strength-bar').style.cssText='width:0%;background:var(--border2)';
@@ -1847,16 +1742,43 @@ function resetStr(){
   const ct=document.getElementById('m-cracktime');ct.textContent='—';ct.style.color='var(--text)';
   document.getElementById('warn-box').style.display='none';
   document.getElementById('match-row').style.display='none';
-  document.getElementById('tips-list').innerHTML='<div style="font-size:14px;color:var(--text3);">Enter a password above to get tailored recommendations.</div>';
   hideAiAnalysisBox();
   highlightLength(0);
 }
 
-function updateAiAnalysisButton(pw){
-  const btn=document.getElementById('ai-analysis-btn');
-  if(!btn) return;
-  btn.disabled = !pw;
-  if(!pw) hideAiAnalysisBox();
+let aiDebounceTimer = null;
+const AI_PHASES = [
+  'Analyzing patterns...',
+  'Estimating crack time...',
+  'Checking known attack vectors...',
+  'Generating recommendations...'
+];
+let aiPhaseInterval = null;
+
+function scheduleAiAnalysis(pw) {
+  clearTimeout(aiDebounceTimer);
+  if (!pw) {
+    hideAiAnalysisBox();
+    return;
+  }
+  aiDebounceTimer = setTimeout(() => {
+    getAiAnalysis();
+  }, 800);
+}
+
+function startAiPhases() {
+  let i = 0;
+  const phaseEl = document.getElementById('ai-phase-text');
+  if (phaseEl) phaseEl.textContent = AI_PHASES[0];
+  clearInterval(aiPhaseInterval);
+  aiPhaseInterval = setInterval(() => {
+    i = (i + 1) % AI_PHASES.length;
+    if (phaseEl) phaseEl.textContent = AI_PHASES[i];
+  }, 900);
+}
+
+function stopAiPhases() {
+  clearInterval(aiPhaseInterval);
 }
 function hideAiAnalysisBox(){
   const box=document.getElementById('ai-analysis-box');
@@ -1947,29 +1869,28 @@ function renderAiAnalysis(rawText){
     try{ return marked.parse(rawText); }catch(err){ return '<pre style="white-space:pre-wrap;color:var(--text2)">'+(rawText||'')+'</pre>'; }
   }
 }
-async function getAiAnalysis(){
-  const pwEl=document.getElementById('pw-s');
-  if(!pwEl) return;
-  const pw=pwEl.value.trim();
-  if(!pw) return;
-  const btn=document.getElementById('ai-analysis-btn');
-  if(btn) btn.disabled=true;
+async function getAiAnalysis() {
+  const pwEl = document.getElementById('pw-s');
+  if (!pwEl) return;
+  const pw = pwEl.value.trim();
+  if (!pw) return;
   showAiAnalysisState('loading');
-  try{
+  startAiPhases();
+  try {
     const response = await fetch('https://cyber-hub-password.giadalivini.workers.dev', {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({password:pw})
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: pw })
     });
-    if(!response.ok) throw new Error('Network response was not ok');
+    if (!response.ok) throw new Error('Network error');
     const data = await response.json();
-    if(!data || typeof data.analysis !== 'string') throw new Error('Invalid response body');
+    if (!data || typeof data.analysis !== 'string') throw new Error('Invalid response');
     const html = renderAiAnalysis(data.analysis);
     showAiAnalysisState('result', html);
-  } catch(err){
+  } catch (err) {
     showAiAnalysisState('error', 'AI analysis unavailable right now, please try again later.');
-  } finally{
-    if(btn && pwEl.value.trim()) btn.disabled=false;
+  } finally {
+    stopAiPhases();
   }
 }
 
